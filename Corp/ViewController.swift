@@ -32,7 +32,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
         let rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
         
-        cell.textLabel?.text = rowData["trackname"] as? String
+        cell.textLabel?.text = rowData["trackMame"] as? String
 
         let urlString: NSString = rowData["artworkUrl60"] as NSString
         let imgURL: NSURL? = NSURL(string: urlString)
@@ -40,10 +40,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let imgData = NSData(contentsOfURL: imgURL!)
         cell.imageView?.image = UIImage(data: imgData!)
 
-        let formattedPrice: NSString = rowData["formattedPrice"] as NSString
+//        let trackPrice: NSString = rowData["trackPrice"] as NSString
+//
+//        cell.detailTextLabel?.text = trackPrice
 
-        cell.detailTextLabel?.text = formattedPrice
-        
         return cell
     }
     
