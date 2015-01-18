@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var appsTableView: UITableView!
+    var tableData = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,46 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             cell.detailTextLabel?.text = "Subtitle #\(indexPath.row)"
         
         return cell
+    }
+    
+    func searchItunesFor(searchItem: String) {
+        
+        let itunesSearchTerm = searchTerm.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.CaseInsensitiveSearch, range: nil)
+
+        if let escapedSearchTerm = itunesSearchTerm.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
+
+            let urlPath = "http://itunes.apple.com/search?term=\(escapedSearchTerm)&media=music"
+            let url = NSURL(string: urlPath)
+            let session = NSURLSession.sharedSession()
+
+            let task = session.dataTaskWithURL(url!, completionHandler: {data, response, error -> Void in
+                println("Task Completed!")
+
+                if (error != nil) {
+                    println(error.localizedDescription)
+                }
+
+                var err: NSError?
+
+                var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
+
+                if (err != nil) {
+                    println("JSON Error \(err!.localizedDescription)")
+                }
+
+                let results: NSArray = jsonResult["resulsts"] as NSArray
+
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableData = results
+                    self.appsTableView!.reloadData()
+                })
+
+            })
+
+            task.resume()
+
+        }
+        
     }
 
 
