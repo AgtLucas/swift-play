@@ -15,7 +15,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        searchItunesFor("Iron Maiden")
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,14 +24,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return tableData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "MyTestCell")
+
+        let rowData: NSDictionary = self.tableData[indexPath.row] as NSDictionary
         
-            cell.textLabel?.text = "Row #\(indexPath.row)"
-            cell.detailTextLabel?.text = "Subtitle #\(indexPath.row)"
+        cell.textLabel.text = rowData["trackname"] as? String
+
+        let urlString: NSString = rowData["artworkUrl60"] as NSString
+        let imgURL: NSURL? = NSURL(string: urlString)
+
+        let imgData = NSData(contentsOfURL: imgURL!)
+        cell.imageView.image = UIImage(data: imgData!)
+
+        let formattedPrice: NSString = rowData["formattedPrice"] as NSString
+
+        cell.detailTextLabel?.text = formattedPrice
         
         return cell
     }
