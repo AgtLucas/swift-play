@@ -72,7 +72,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     println("JSON Error \(err!.localizedDescription)")
                 }
 
-                let results: NSArray = jsonResult["resulsts"] as NSArray
+                let results: NSArray = jsonResult["results"] as NSArray
 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.tableData = results
