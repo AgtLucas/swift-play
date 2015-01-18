@@ -64,12 +64,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     println(error.localizedDescription)
                 }
 
-                var err: NSError?
+                var 😡: NSError?
 
-                var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
+                var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &😡) as NSDictionary
 
-                if (err != nil) {
-                    println("JSON Error \(err!.localizedDescription)")
+                if (😡 != nil) {
+                    println("JSON Error \(😡!.localizedDescription)")
                 }
 
                 let results: NSArray = jsonResult["results"] as NSArray
