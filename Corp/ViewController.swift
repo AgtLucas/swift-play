@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    @IBOutlet weak var appsTableView: UITableView!
+    @IBOutlet var appsTableView: UITableView?
     var tableData = []
     
     override func viewDidLoad() {
